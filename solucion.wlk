@@ -2,9 +2,13 @@
 class Guerrero{
     const potencialOfensivo
     var experiencia
-    var energia
     const energiaOriginal
-    var traje
+    var property energia = energiaOriginal
+    var property traje
+
+    method potencialOfensivo(){
+        return potencialOfensivo
+    }
 
     method atacar(unGuerrero){
         unGuerrero.recibirAtaque(potencialOfensivo)
@@ -24,6 +28,10 @@ class Guerrero{
 
     method estaMuerto(){
         return energia == 0
+    }
+
+    method cantidadDePiezas(){
+        return traje.cantidadDePiezas()
     }
 }
 
@@ -50,7 +58,7 @@ class TrajeComun inherits Traje{
     method experienciaAOtorgar(){
         return 1
     }
-
+    
 }
 
 class TrajeDeEntrenamiento inherits Traje{
@@ -66,6 +74,7 @@ class TrajeDeEntrenamiento inherits Traje{
 
         return 1 * configuracionEntrenamiento.multiplicadorDeExperiencia()
     }
+
 }
 
 // Punto 3
@@ -80,11 +89,15 @@ class Traje{
         return desgaste == 100
     }
 
+    method cantidadDePiezas(){
+        return 1
+    }
+
 }
 
 //Punto 4
 class Pieza{
-    var resistencia
+    const resistencia
     var desgaste = 0
 
     method desgastar(){
@@ -94,9 +107,13 @@ class Pieza{
     method estaGastado(){
         return desgaste >= 20
     }
+
+    method resistencia(){
+        return resistencia
+    }
 }
 
-class TrajeModuralizado inherits Traje{
+class TrajeModularizado inherits Traje{
     const piezas = []
 
     override method desgastar(){
@@ -120,5 +137,37 @@ class TrajeModuralizado inherits Traje{
     method experienciaAOtorgar(){
         const piezasNoGastadas = self.piezasNoGastadas().size() / piezas.size()
         return 1 + piezasNoGastadas
+    }
+
+    override method cantidadDePiezas(){
+        return piezas.size()
+    }
+}
+
+//Punto 6
+
+class Torneo{
+    const modalidad
+
+    method seleccionarJugadores(candidatos){
+        return modalidad.seleccionar(candidatos)
+    }
+}
+
+object powerIsBest{
+    method seleccionar(candidatos){
+        return candidatos.sortedBy({a, b => a.potencialOfensivo() > b.potencialOfensivo()}).take(16)
+    }
+}
+
+object funny{
+    method seleccionar(candidatos){
+        return candidatos.sortedBy({a, b => a.cantidadDePiezas() > b.cantidadDePiezas()}).take(16)
+    }
+}
+
+object surprise{
+    method seleccionar(candidatos){
+        return candidatos.randomized().take(16)
     }
 }

@@ -1,0 +1,56 @@
+import solucion.*
+
+describe "Pruebas de trajes de Dragon Ball"{
+
+    const trajeVegeta = new TrajeComun(porcentajeDeProteccion=0.03)
+    const vegeta = new Guerrero(potencialOfensivo=100, experiencia=100, energiaOriginal=5000, traje=trajeVegeta)
+
+    const trajeGoku = new TrajeComun(porcentajeDeProteccion=0)
+    const goku = new Guerrero(potencialOfensivo=100, experiencia=100, energiaOriginal=5000, traje=trajeGoku)
+    
+    const trajePiccoro = new TrajeDeEntrenamiento()
+    const gohan = new Guerrero(potencialOfensivo=150, experiencia=0, energiaOriginal=3000, traje=trajePiccoro)
+
+
+    test "Gohan con traje de entrenamiento de piccoro, al entrenar con Goku 20 veces, queda gastado"{
+
+        20.times({i => goku.atacar(gohan)})
+        assert.that(gohan.traje().estaGastado())
+    }
+    test "Vegeta con traje de proteccion del 3% de proteccion queda en 4993 de energia al ser atacado por Goku"{
+
+        goku.atacar(vegeta)
+        assert.equals(4993, vegeta.energia())
+    }
+}
+
+describe "Pruebas de selección para el torneo de la fuerza"{
+    const trajeHit = new TrajeModularizado(piezas=[new Pieza(resistencia=2), new Pieza(resistencia=3), new Pieza(resistencia=1)])
+    const hit = new Guerrero(potencialOfensivo=200, experiencia=300, energiaOriginal=4000, traje=trajeHit)
+
+    const trajeKefla = new TrajeDeEntrenamiento()
+    const kefla = new Guerrero(potencialOfensivo= 210, experiencia=50, energiaOriginal=5000, traje=trajeKefla)
+
+    const trajeGoku = new TrajeComun(porcentajeDeProteccion=0.05)
+    const goku = new Guerrero(potencialOfensivo= 250, experiencia=100, energiaOriginal=5000, traje=trajeGoku)
+
+    const trajeJiren = new TrajeDeEntrenamiento()
+    const jiren = new Guerrero(potencialOfensivo= 300, experiencia=200, energiaOriginal=6000, traje=trajeJiren)
+
+    const candidatos = [hit, kefla, goku, jiren]
+
+    test "Modalidad de seleccion PowerIsBest, donde se prioriza a los de mayor potencial ofensivo"{
+
+        const torneo = new Torneo(modalidad = powerIsBest)
+        const seleccionados = torneo.seleccionarJugadores(candidatos)
+        assert.equals([jiren, goku, kefla, hit], seleccionados)
+
+    }
+    
+    test "Modalidad de seleccion Funny, donde se prioriza a los trajes que tienen más piezas"{
+
+        const torneo = new Torneo(modalidad = funny)
+        const seleccionados = torneo.seleccionarJugadores(candidatos)
+        assert.equals(hit, seleccionados.first())
+    }
+}
