@@ -11,6 +11,15 @@ class Guerrero{
     }
 
     method atacar(unGuerrero){
+
+        if(self.estaMuerto()){
+            throw new DomainException(message = "El guerrero está muerto y no puede atacar")
+        }
+
+        if(unGuerrero.estaMuerto()){
+            throw new DomainException(message = "El guerrero atacado está muerto y no puede ser atacado")
+        }
+
         unGuerrero.recibirAtaque(potencialOfensivo)
     }
 

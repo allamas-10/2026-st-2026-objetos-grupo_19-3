@@ -1,6 +1,6 @@
 import solucion.*
 
-describe "Pruebas de trajes de Dragon Ball"{
+describe "Pruebas de combates de Dragon Ball"{
 
     const trajeVegeta = new TrajeComun(porcentajeDeProteccion=0.03)
     const vegeta = new Guerrero(potencialOfensivo=100, experiencia=100, energiaOriginal=5000, traje=trajeVegeta)
@@ -21,6 +21,12 @@ describe "Pruebas de trajes de Dragon Ball"{
 
         goku.atacar(vegeta)
         assert.equals(4993, vegeta.energia())
+    }
+
+    test "Un guerrero no puede atacar si esta muerto (energia = 0) y lanza una excepcion"{
+        const krillin = new Guerrero(potencialOfensivo=50, experiencia=70, energiaOriginal=0, traje=new TrajeComun(porcentajeDeProteccion=0.1))
+        const freezer = new Guerrero(potencialOfensivo=200, experiencia=100, energiaOriginal=5000, traje= new TrajeComun(porcentajeDeProteccion=0.5))
+        assert.throwsExceptionWithMessage("El guerrero atacado está muerto y no puede ser atacado", {freezer.atacar(krillin)})
     }
 }
 
