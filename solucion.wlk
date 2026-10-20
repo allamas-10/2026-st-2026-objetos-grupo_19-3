@@ -95,7 +95,7 @@ class Traje{
     }
 
     method estaGastado(){
-        return desgaste == 100
+        return desgaste >= 100
     }
 
     method cantidadDePiezas(){
