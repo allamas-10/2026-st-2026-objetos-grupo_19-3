@@ -114,7 +114,7 @@ class Pieza{
 }
 
 class TrajeModularizado inherits Traje{
-    const piezas = []
+    const piezas = #{}
 
     override method desgastar(){
         piezas.forEach({ pieza => pieza.desgastar()})

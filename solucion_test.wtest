@@ -25,7 +25,7 @@ describe "Pruebas de trajes de Dragon Ball"{
 }
 
 describe "Pruebas de selección para el torneo de la fuerza"{
-    const trajeHit = new TrajeModularizado(piezas=[new Pieza(resistencia=2), new Pieza(resistencia=3), new Pieza(resistencia=1)])
+    const trajeHit = new TrajeModularizado(piezas=#{new Pieza(resistencia=2), new Pieza(resistencia=3), new Pieza(resistencia=1)})
     const hit = new Guerrero(potencialOfensivo=200, experiencia=300, energiaOriginal=4000, traje=trajeHit)
 
     const trajeKefla = new TrajeDeEntrenamiento()
